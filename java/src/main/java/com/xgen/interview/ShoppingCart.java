@@ -7,13 +7,13 @@ import java.util.Map;
 public class ShoppingCart implements IShoppingCart {
 
     private final HashMap<String, Integer> contents = new HashMap<>();
-    private final PricingDatabaseInMemory pricer;
+    private final IPricingDatabase pricingDatabase;
     private final IShoppingCartReceiptFormatter receiptFormatter;
 
 
     public ShoppingCart(PricingDatabaseInMemory pricer,
                         IShoppingCartReceiptFormatter receiptFormatter) {
-        this.pricer = pricer;
+        this.pricingDatabase = pricer;
         this.receiptFormatter = receiptFormatter;
     }
 
@@ -30,7 +30,7 @@ public class ShoppingCart implements IShoppingCart {
         return contents;
     }
 
-    public PricingDatabaseInMemory getPricer() {
-        return pricer;
+    public IPricingDatabase getPricingDatabase() {
+        return pricingDatabase;
     }
 }

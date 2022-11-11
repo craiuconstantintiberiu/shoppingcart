@@ -12,7 +12,7 @@ public class SimpleShoppingCartReceiptFormatter implements IShoppingCartReceiptF
         for (Map.Entry<String, Integer> itemAndQuantity : shoppingCart.getContents().entrySet()) {
             String itemType = itemAndQuantity.getKey();
             int quantity = itemAndQuantity.getValue();
-            int priceInCents = shoppingCart.getPricer().getPrice(itemType) * quantity;
+            int priceInCents = shoppingCart.getPricingDatabase().getPrice(itemType) * quantity;
 
             totalInCents += priceInCents;
             String priceString = String.format(PRICE_FORMAT, convertFromCentsToEuros(priceInCents));
