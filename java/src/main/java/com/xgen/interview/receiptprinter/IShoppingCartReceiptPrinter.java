@@ -1,13 +1,15 @@
 package com.xgen.interview.receiptprinter;
 
-import com.xgen.interview.ShoppingCart;
+import com.xgen.interview.ShoppingItem;
+
+import java.util.List;
 
 public interface IShoppingCartReceiptPrinter {
 
     /**
-     * Prints a shopping cart receipt to stdout.
-     *
-     * @param shoppingCart object implementing the {@code IShoppingCart} interface
+     * Generates receipt based on a list of {@code ShoppingItem}
+     * @param items - Objects of class {@code ShoppingItem}
+     * @return A List holding objects of type {@code String}, each representing one line of the receipt.
      */
-    void printReceipt(ShoppingCart shoppingCart);
+    List<String> generateReceipt(List<ShoppingItem> items);
 }

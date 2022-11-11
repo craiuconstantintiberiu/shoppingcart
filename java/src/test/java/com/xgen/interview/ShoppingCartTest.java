@@ -1,5 +1,6 @@
 package com.xgen.interview;
 
+import com.xgen.interview.pricingdatabase.IPricingDatabase;
 import com.xgen.interview.pricingdatabase.PricingDatabaseInMemory;
 import com.xgen.interview.receiptprinter.IShoppingCartReceiptPrinter;
 import org.junit.Before;
@@ -8,16 +9,20 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
 public class ShoppingCartTest {
 
     @Mock
-    private PricingDatabaseInMemory pricer;
+    private IPricingDatabase pricingDatabase;
 
     @Mock
     private IShoppingCartReceiptPrinter receiptFormatter;
@@ -27,7 +32,7 @@ public class ShoppingCartTest {
 
     @Before
     public void setup() {
-        shoppingCart = new ShoppingCart(pricer, receiptFormatter);
+        shoppingCart = new ShoppingCart(pricingDatabase, receiptFormatter);
     }
 
     @Test
@@ -67,9 +72,23 @@ public class ShoppingCartTest {
     }
 
     @Test
+    public void whenObtainingShoppingItemsThenShoppingItemsAreCorrectlyObtained() {
+        shoppingCart.addItem("apple", 2);
+        shoppingCart.addItem("apple", 2);
+        shoppingCart.addItem("banana", 3);
+
+        when(pricingDatabase.getPrice("apple")).thenReturn(100);
+        when(pricingDatabase.getPrice("banana")).thenReturn(50);
+
+        List<ShoppingItem> items = shoppingCart.getShoppingItems();
+        assertTrue(items.contains(new ShoppingItem("apple", 100, 4)));
+        assertTrue(items.contains(new ShoppingItem("banana", 50, 3)));
+    }
+
+    @Test
     public void whenPrintingReceiptReceiptFormatterIsCalled() {
         shoppingCart.printReceipt();
-        verify(receiptFormatter).printReceipt(shoppingCart);
+        verify(receiptFormatter).generateReceipt(any(List.class));
     }
 }
 

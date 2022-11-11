@@ -4,9 +4,10 @@ import com.xgen.interview.pricingdatabase.IPricingDatabase;
 import com.xgen.interview.pricingdatabase.PricingDatabaseInMemory;
 import com.xgen.interview.receiptprinter.IShoppingCartReceiptPrinter;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /**
@@ -16,12 +17,12 @@ import java.util.Map;
  */
 public class ShoppingCart implements IShoppingCart {
 
-    private final HashMap<String, Integer> contents = new LinkedHashMap<>();
+    private final Map<String, Integer> contents = new LinkedHashMap<>();
     private final IPricingDatabase pricingDatabase;
     private final IShoppingCartReceiptPrinter receiptFormatter;
 
 
-    public ShoppingCart(PricingDatabaseInMemory pricer,
+    public ShoppingCart(IPricingDatabase pricer,
                         IShoppingCartReceiptPrinter receiptFormatter) {
         this.pricingDatabase = pricer;
         this.receiptFormatter = receiptFormatter;
@@ -37,7 +38,13 @@ public class ShoppingCart implements IShoppingCart {
      * constructor.
      */
     public void printReceipt() {
-        receiptFormatter.printReceipt(this);
+        receiptFormatter.generateReceipt(getShoppingItems()).forEach(System.out::println);
+    }
+
+    public List<ShoppingItem> getShoppingItems() {
+        return contents.entrySet().stream()
+                .map(item -> new ShoppingItem(item.getKey(), pricingDatabase.getPrice(item.getKey()), item.getValue()))
+                .collect(Collectors.toList());
     }
 
     public Map<String, Integer> getContents() {

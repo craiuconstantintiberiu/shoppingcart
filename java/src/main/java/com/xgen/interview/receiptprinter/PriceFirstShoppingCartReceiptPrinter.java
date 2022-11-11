@@ -1,7 +1,10 @@
 package com.xgen.interview.receiptprinter;
 
 import com.xgen.interview.ShoppingCart;
+import com.xgen.interview.ShoppingItem;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,23 +19,22 @@ import java.util.Map;
  */
 public class PriceFirstShoppingCartReceiptPrinter implements IShoppingCartReceiptPrinter {
 
-    public static final String OUTPUT_FORMAT = "€%.2f - %s - %d%n";
-    public static final String TOTAL_FORMAT = "Total - €%.2f%n";
+    public static final String OUTPUT_FORMAT = "€%.2f - %s - %d";
+    public static final String TOTAL_FORMAT = "Total - €%.2f";
 
     @Override
-    public void printReceipt(ShoppingCart shoppingCart) {
+    public List<String> generateReceipt(List<ShoppingItem> items) {
+        List<String> receipt = new ArrayList<>();
         int totalInCents = 0;
-        for (Map.Entry<String, Integer> itemAndQuantity : shoppingCart.getContents().entrySet()) {
-            String itemType = itemAndQuantity.getKey();
-            int quantity = itemAndQuantity.getValue();
-            int priceInCents = shoppingCart.getPricingDatabase().getPrice(itemType) * quantity;
-            totalInCents += priceInCents;
-            float priceInEuros = convertFromCentsToEuros(priceInCents);
-            System.out.printf(OUTPUT_FORMAT, priceInEuros, itemAndQuantity.getKey(),
-                    itemAndQuantity.getValue());
+        for (ShoppingItem item : items) {
+            int totalPriceForItem = item.getPrice() * item.getQuantity();
+            float priceInEuros = totalPriceForItem / 100.0f;
+            receipt.add(String.format(OUTPUT_FORMAT, priceInEuros, item.getName(),
+                    item.getQuantity()));
+            totalInCents += totalPriceForItem;
         }
-
-        System.out.printf(TOTAL_FORMAT, convertFromCentsToEuros(totalInCents));
+        receipt.add(String.format(TOTAL_FORMAT, convertFromCentsToEuros(totalInCents)));
+        return receipt;
     }
 
     private float convertFromCentsToEuros(int cents) {
