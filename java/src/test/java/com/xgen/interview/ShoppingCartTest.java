@@ -8,6 +8,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -16,11 +17,15 @@ public class ShoppingCartTest {
     @Mock
     private PricingDatabaseInMemory pricer;
 
+    @Mock
+    private IShoppingCartReceiptFormatter receiptFormatter;
+
+
     private ShoppingCart shoppingCart;
 
     @Before
     public void setup() {
-        shoppingCart = new ShoppingCart(pricer);
+        shoppingCart = new ShoppingCart(pricer, receiptFormatter);
     }
 
     @Test
@@ -48,6 +53,12 @@ public class ShoppingCartTest {
         assertEquals(2, (int) shoppingCart.getContents().get("apple"));
         assertTrue(shoppingCart.getContents().containsKey("banana"));
         assertEquals(1, (int) shoppingCart.getContents().get("banana"));
+    }
+
+    @Test
+    public void whenPrintingReceiptReceiptFormatterIsCalled() {
+        shoppingCart.printReceipt();
+        verify(receiptFormatter).printReceipt(shoppingCart);
     }
 }
 
