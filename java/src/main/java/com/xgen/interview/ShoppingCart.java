@@ -9,6 +9,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 
+/**
+ * Represents a shopping cart, backed by an ordered collection. When printing the receipt of this shopping cart,
+ * items are printed based on the order in which they were scanned. Note: Items are ordered based on their
+ * insertion, not when their quantities were last modified.
+ */
 public class ShoppingCart implements IShoppingCart {
 
     private final HashMap<String, Integer> contents = new LinkedHashMap<>();
@@ -22,11 +27,15 @@ public class ShoppingCart implements IShoppingCart {
         this.receiptFormatter = receiptFormatter;
     }
 
-    public void addItem(String itemType, int number) {
+    public void addItem(String itemType, int quantity) {
         contents.compute(itemType,
-                (key, existingValue) -> existingValue == null ? number : existingValue + number);
+                (key, existingValue) -> existingValue == null ? quantity : existingValue + quantity);
     }
 
+    /**
+     * Prints the receipt of the shopping cart, based on the {@code IShoppingCartReceiptPrinter} specified in the
+     * constructor.
+     */
     public void printReceipt() {
         receiptFormatter.printReceipt(this);
     }

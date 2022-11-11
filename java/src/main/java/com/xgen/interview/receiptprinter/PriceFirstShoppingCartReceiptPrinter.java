@@ -4,6 +4,16 @@ import com.xgen.interview.ShoppingCart;
 
 import java.util.Map;
 
+/**
+ * Represents a printer for a shopping cart, printing to standard output the items in the shopping cart, with itemized
+ * totals based on per-item quantity and price and a total for the entire cart. Prices are represented as floats with 2
+ * decimals.
+ *
+ * Example receipt:
+ * €1.50 - Apple - 1
+ * €3.40 - Banana - 2
+ * Total - €4.90
+ */
 public class PriceFirstShoppingCartReceiptPrinter implements IShoppingCartReceiptPrinter {
 
     public static final String OUTPUT_FORMAT = "€%.2f - %s - %d%n";
