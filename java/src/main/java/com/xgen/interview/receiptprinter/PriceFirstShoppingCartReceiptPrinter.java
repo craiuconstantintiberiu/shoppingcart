@@ -9,7 +9,7 @@ import java.util.List;
  * Represents a printer for a shopping cart, printing to standard output the items in the shopping cart, with itemized
  * totals based on per-item quantity and price and a total for the entire cart. Prices are represented as floats with 2
  * decimals.
- *
+ * <p>
  * Example receipt:
  * €1.50 - Apple - 1
  * €3.40 - Banana - 2

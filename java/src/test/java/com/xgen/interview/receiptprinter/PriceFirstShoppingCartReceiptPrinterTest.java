@@ -75,7 +75,7 @@ public class PriceFirstShoppingCartReceiptPrinterTest {
         when(pricer.getPrice("banana")).thenReturn(50);
 
         assertEquals(receiptFormatter.generateReceipt(shoppingCart.getShoppingItems())
-                .get(0),String.format(OUTPUT_FORMAT, 5.0f, "apple", 5));
+                .get(0), String.format(OUTPUT_FORMAT, 5.0f, "apple", 5));
     }
 
 }

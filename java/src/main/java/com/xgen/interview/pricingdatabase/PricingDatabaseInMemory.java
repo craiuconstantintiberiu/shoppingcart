@@ -11,6 +11,7 @@ public class PricingDatabaseInMemory implements IPricingDatabase {
 
     /**
      * Initializes database given a map of ItemType, Price(as euro-cents) key-value pairs.
+     *
      * @param itemsAndPrices - map of items and respective prices
      */
     public PricingDatabaseInMemory(Map<String, Integer> itemsAndPrices) {

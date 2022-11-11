@@ -8,6 +8,7 @@ public interface IShoppingCartReceiptPrinter {
 
     /**
      * Generates receipt based on a list of {@code ShoppingItem}
+     *
      * @param items - Objects of class {@code ShoppingItem}
      * @return A List holding objects of type {@code String}, each representing one line of the receipt.
      */
