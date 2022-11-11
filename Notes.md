@@ -14,4 +14,6 @@ I assumed that in a legacy environment this would have been done for a reason, s
 
 Tried to adhere to using interfaces to make the code as open to extensions as possible and depend on abstractions, not concrete classes.
 
+Also tried to document the classes, interfaces and methods I added.
+
 Fun experience, would repeat.
