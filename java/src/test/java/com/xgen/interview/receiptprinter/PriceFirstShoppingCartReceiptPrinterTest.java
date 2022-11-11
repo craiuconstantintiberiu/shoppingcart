@@ -8,9 +8,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
 import static com.xgen.interview.receiptprinter.PriceFirstShoppingCartReceiptPrinter.OUTPUT_FORMAT;
 import static com.xgen.interview.receiptprinter.PriceFirstShoppingCartReceiptPrinter.TOTAL_FORMAT;
 import static junit.framework.TestCase.assertTrue;

@@ -2,16 +2,11 @@ package com.xgen.interview.receiptprinter;
 
 import com.xgen.interview.ShoppingCart;
 import com.xgen.interview.pricingdatabase.PricingDatabaseInMemory;
-import com.xgen.interview.receiptprinter.IShoppingCartReceiptPrinter;
-import com.xgen.interview.receiptprinter.SimpleShoppingCartReceiptPrinter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 import static com.xgen.interview.receiptprinter.SimpleShoppingCartReceiptPrinter.OUTPUT_FORMAT;
 import static com.xgen.interview.receiptprinter.SimpleShoppingCartReceiptPrinter.TOTAL_FORMAT;
