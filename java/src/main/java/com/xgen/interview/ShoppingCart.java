@@ -9,20 +9,16 @@ import java.util.*;
  * Please write a replacement
  */
 public class ShoppingCart implements IShoppingCart {
-    HashMap<String, Integer> contents = new HashMap<>();
-    Pricer pricer;
+    private final HashMap<String, Integer> contents = new HashMap<>();
+    private final Pricer pricer;
 
     public ShoppingCart(Pricer pricer) {
         this.pricer = pricer;
     }
 
     public void addItem(String itemType, int number) {
-        if (!contents.containsKey(itemType)) {
-            contents.put(itemType, number);
-        } else {
-            int existing = contents.get(itemType);
-            contents.put(itemType, existing + number);
-        }
+        contents.compute(itemType,
+                (key, existingValue) -> existingValue==null? number: existingValue+number);
     }
 
     public void printReceipt() {
@@ -30,10 +26,18 @@ public class ShoppingCart implements IShoppingCart {
 
         for (int i = 0; i < Array.getLength(keys) ; i++) {
             Integer price = pricer.getPrice((String)keys[i]) * contents.get(keys[i]);
-            Float priceFloat = new Float(new Float(price) / 100);
+            Float priceFloat =  price / 100.0f;
             String priceString = String.format("€%.2f", priceFloat);
 
             System.out.println(keys[i] + " - " + contents.get(keys[i]) + " - " + priceString);
         }
+    }
+
+    public Map<String, Integer> getContents() {
+        return contents;
+    }
+
+    public Pricer getPricer() {
+        return pricer;
     }
 }

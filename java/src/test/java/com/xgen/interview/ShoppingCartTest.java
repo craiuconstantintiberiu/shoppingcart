@@ -1,75 +1,53 @@
 package com.xgen.interview;
 
-import com.xgen.interview.Pricer;
-import com.xgen.interview.ShoppingCart;
+import org.junit.Before;
 import org.junit.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
+@RunWith(MockitoJUnitRunner.class)
 public class ShoppingCartTest {
 
-    @Test
-    public void canAddAnItem() {
-        ShoppingCart sc = new ShoppingCart(new Pricer());
+    @Mock
+    private Pricer pricer;
 
-        sc.addItem("apple", 1);
+    private ShoppingCart shoppingCart;
 
-        final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(myOut));
-
-        sc.printReceipt();
-        assertEquals(String.format("apple - 1 - €1.00%n"), myOut.toString());
+    @Before
+    public void setup() {
+        shoppingCart = new ShoppingCart(pricer);
     }
 
     @Test
-    public void canAddMoreThanOneItem() {
-        ShoppingCart sc = new ShoppingCart(new Pricer());
+    public void whenAddingItemThenItemAdded() {
+        shoppingCart.addItem("apple", 1);
 
-        sc.addItem("apple", 2);
-
-        final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(myOut));
-
-        sc.printReceipt();
-        assertEquals(String.format("apple - 2 - €2.00%n"), myOut.toString());
+        assertTrue(shoppingCart.getContents().containsKey("apple"));
+        assertEquals(1, (int) shoppingCart.getContents().get("apple"));
     }
 
     @Test
-    public void canAddDifferentItems() {
-        ShoppingCart sc = new ShoppingCart(new Pricer());
+    public void whenAddingItemMultipleQuantitiesThenItemAdded() {
+        shoppingCart.addItem("apple", 2);
 
-        sc.addItem("apple", 2);
-        sc.addItem("banana", 1);
-
-        final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(myOut));
-
-        sc.printReceipt();
-
-        String result = myOut.toString();
-
-        if (result.startsWith("apple")) {
-            assertEquals(String.format("apple - 2 - €2.00%nbanana - 1 - €2.00%n"), result);
-        } else {
-            assertEquals(String.format("banana - 1 - €2.00%napple - 2 - €2.00%n"), result);
-        }
+        assertTrue(shoppingCart.getContents().containsKey("apple"));
+        assertEquals(2, (int) shoppingCart.getContents().get("apple"));
     }
 
     @Test
-    public void doesntExplodeOnMysteryItem() {
-        ShoppingCart sc = new ShoppingCart(new Pricer());
+    public void whenAddingMultipleItemsThenItemsAdded() {
+        shoppingCart.addItem("apple", 2);
+        shoppingCart.addItem("banana", 1);
 
-        sc.addItem("crisps", 2);
-
-        final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(myOut));
-
-        sc.printReceipt();
-        assertEquals(String.format("crisps - 2 - €0.00%n"), myOut.toString());
+        assertTrue(shoppingCart.getContents().containsKey("apple"));
+        assertEquals(2, (int) shoppingCart.getContents().get("apple"));
+        assertTrue(shoppingCart.getContents().containsKey("banana"));
+        assertEquals(1, (int) shoppingCart.getContents().get("banana"));
     }
 }
 
