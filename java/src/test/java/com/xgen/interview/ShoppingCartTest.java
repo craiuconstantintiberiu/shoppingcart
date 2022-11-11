@@ -1,7 +1,7 @@
 package com.xgen.interview;
 
+import com.xgen.interview.model.ShoppingItem;
 import com.xgen.interview.pricingdatabase.IPricingDatabase;
-import com.xgen.interview.pricingdatabase.PricingDatabaseInMemory;
 import com.xgen.interview.receiptprinter.IShoppingCartReceiptPrinter;
 import org.junit.Before;
 import org.junit.Test;

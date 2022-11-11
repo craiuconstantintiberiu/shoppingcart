@@ -1,6 +1,6 @@
 package com.xgen.interview.receiptprinter;
 
-import com.xgen.interview.ShoppingItem;
+import com.xgen.interview.model.ShoppingItem;
 
 import java.util.List;
 

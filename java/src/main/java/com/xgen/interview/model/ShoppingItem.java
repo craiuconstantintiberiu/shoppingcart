@@ -1,4 +1,4 @@
-package com.xgen.interview;
+package com.xgen.interview.model;
 
 import java.util.Objects;
 

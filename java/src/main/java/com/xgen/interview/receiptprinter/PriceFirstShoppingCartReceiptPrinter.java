@@ -1,11 +1,9 @@
 package com.xgen.interview.receiptprinter;
 
-import com.xgen.interview.ShoppingCart;
-import com.xgen.interview.ShoppingItem;
+import com.xgen.interview.model.ShoppingItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Represents a printer for a shopping cart, printing to standard output the items in the shopping cart, with itemized
