@@ -10,9 +10,9 @@ import java.util.*;
  */
 public class ShoppingCart implements IShoppingCart {
     private final HashMap<String, Integer> contents = new HashMap<>();
-    private final Pricer pricer;
+    private final PricingDatabaseInMemory pricer;
 
-    public ShoppingCart(Pricer pricer) {
+    public ShoppingCart(PricingDatabaseInMemory pricer) {
         this.pricer = pricer;
     }
 
@@ -37,7 +37,7 @@ public class ShoppingCart implements IShoppingCart {
         return contents;
     }
 
-    public Pricer getPricer() {
+    public PricingDatabaseInMemory getPricer() {
         return pricer;
     }
 }

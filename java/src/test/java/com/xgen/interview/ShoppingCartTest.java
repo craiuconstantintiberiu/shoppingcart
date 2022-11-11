@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 public class ShoppingCartTest {
 
     @Mock
-    private Pricer pricer;
+    private PricingDatabaseInMemory pricer;
 
     private ShoppingCart shoppingCart;
 
