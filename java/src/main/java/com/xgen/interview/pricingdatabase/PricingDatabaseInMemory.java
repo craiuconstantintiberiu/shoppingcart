@@ -10,7 +10,7 @@ public class PricingDatabaseInMemory implements IPricingDatabase {
         this.itemsAndPrices = itemsAndPrices;
     }
 
-    public Integer getPrice(String itemType) {
+    public int getPrice(String itemType) {
         return itemsAndPrices.getOrDefault(itemType, 0);
     }
 
