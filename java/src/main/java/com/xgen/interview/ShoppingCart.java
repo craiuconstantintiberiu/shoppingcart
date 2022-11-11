@@ -4,10 +4,6 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 
-/**
- * This is the current implementation of ShoppingCart.
- * Please write a replacement
- */
 public class ShoppingCart implements IShoppingCart {
     private final HashMap<String, Integer> contents = new HashMap<>();
     private final PricingDatabaseInMemory pricer;
