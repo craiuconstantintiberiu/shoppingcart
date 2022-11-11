@@ -1,6 +1,8 @@
-package com.xgen.interview;
+package com.xgen.interview.receiptprinter;
 
-public interface IShoppingCartReceiptFormatter {
+import com.xgen.interview.ShoppingCart;
+
+public interface IShoppingCartReceiptPrinter {
 
     /**
      * Prints a shopping cart receipt to stdout.

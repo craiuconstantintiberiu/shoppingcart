@@ -1,5 +1,9 @@
 package com.xgen.interview;
 
+import com.xgen.interview.pricingdatabase.IPricingDatabase;
+import com.xgen.interview.pricingdatabase.PricingDatabaseInMemory;
+import com.xgen.interview.receiptprinter.IShoppingCartReceiptPrinter;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,11 +12,11 @@ public class ShoppingCart implements IShoppingCart {
 
     private final HashMap<String, Integer> contents = new HashMap<>();
     private final IPricingDatabase pricingDatabase;
-    private final IShoppingCartReceiptFormatter receiptFormatter;
+    private final IShoppingCartReceiptPrinter receiptFormatter;
 
 
     public ShoppingCart(PricingDatabaseInMemory pricer,
-                        IShoppingCartReceiptFormatter receiptFormatter) {
+                        IShoppingCartReceiptPrinter receiptFormatter) {
         this.pricingDatabase = pricer;
         this.receiptFormatter = receiptFormatter;
     }

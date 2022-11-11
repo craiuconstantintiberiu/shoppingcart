@@ -1,5 +1,7 @@
 package com.xgen.interview;
 
+import com.xgen.interview.pricingdatabase.PricingDatabaseInMemory;
+import com.xgen.interview.receiptprinter.IShoppingCartReceiptPrinter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +20,7 @@ public class ShoppingCartTest {
     private PricingDatabaseInMemory pricer;
 
     @Mock
-    private IShoppingCartReceiptFormatter receiptFormatter;
+    private IShoppingCartReceiptPrinter receiptFormatter;
 
 
     private ShoppingCart shoppingCart;

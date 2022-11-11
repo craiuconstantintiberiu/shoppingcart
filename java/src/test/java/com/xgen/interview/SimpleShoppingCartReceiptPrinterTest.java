@@ -1,5 +1,8 @@
 package com.xgen.interview;
 
+import com.xgen.interview.pricingdatabase.PricingDatabaseInMemory;
+import com.xgen.interview.receiptprinter.IShoppingCartReceiptPrinter;
+import com.xgen.interview.receiptprinter.SimpleShoppingCartReceiptPrinter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,14 +16,14 @@ import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SimpleShoppingCartReceiptFormatterTest {
+public class SimpleShoppingCartReceiptPrinterTest {
 
     @Mock
     private PricingDatabaseInMemory pricer;
 
     private ShoppingCart shoppingCart;
 
-    private final IShoppingCartReceiptFormatter receiptFormatter = new SimpleShoppingCartReceiptFormatter();
+    private final IShoppingCartReceiptPrinter receiptFormatter = new SimpleShoppingCartReceiptPrinter();
 
     @Before
     public void setup() {

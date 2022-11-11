@@ -1,8 +1,10 @@
-package com.xgen.interview;
+package com.xgen.interview.receiptprinter;
+
+import com.xgen.interview.ShoppingCart;
 
 import java.util.Map;
 
-public class SimpleShoppingCartReceiptFormatter implements IShoppingCartReceiptFormatter {
+public class SimpleShoppingCartReceiptPrinter implements IShoppingCartReceiptPrinter {
 
     private static final String PRICE_FORMAT = "€%.2f";
 
