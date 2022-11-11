@@ -2,8 +2,6 @@ package com.xgen.interview.receiptprinter;
 
 import com.xgen.interview.ShoppingCart;
 import com.xgen.interview.pricingdatabase.PricingDatabaseInMemory;
-import com.xgen.interview.receiptprinter.IShoppingCartReceiptPrinter;
-import com.xgen.interview.receiptprinter.SimpleShoppingCartReceiptPrinter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,20 +11,20 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static com.xgen.interview.receiptprinter.SimpleShoppingCartReceiptPrinter.OUTPUT_FORMAT;
-import static com.xgen.interview.receiptprinter.SimpleShoppingCartReceiptPrinter.TOTAL_FORMAT;
+import static com.xgen.interview.receiptprinter.PriceFirstShoppingCartReceiptPrinter.OUTPUT_FORMAT;
+import static com.xgen.interview.receiptprinter.PriceFirstShoppingCartReceiptPrinter.TOTAL_FORMAT;
 import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SimpleShoppingCartReceiptPrinterTest extends ReceiptPrinterTest {
+public class PriceFirstShoppingCartReceiptPrinterTest extends ReceiptPrinterTest {
 
     @Mock
     private PricingDatabaseInMemory pricer;
 
     private ShoppingCart shoppingCart;
 
-    private final IShoppingCartReceiptPrinter receiptFormatter = new SimpleShoppingCartReceiptPrinter();
+    private final IShoppingCartReceiptPrinter receiptFormatter = new PriceFirstShoppingCartReceiptPrinter();
 
     @Before
     public void setup() {
@@ -39,7 +37,7 @@ public class SimpleShoppingCartReceiptPrinterTest extends ReceiptPrinterTest {
         when(pricer.getPrice("apple")).thenReturn(100);
 
         String receipt = getReceiptPrintResult(receiptFormatter, shoppingCart);
-        assertTrue(receipt.contains(String.format(OUTPUT_FORMAT, "apple", 1, 1.0f)));
+        assertTrue(receipt.contains(String.format(OUTPUT_FORMAT, 1.0f, "apple", 1)));
         assertTrue(receipt.contains(String.format(TOTAL_FORMAT, 1.0f)));
     }
 
@@ -49,7 +47,7 @@ public class SimpleShoppingCartReceiptPrinterTest extends ReceiptPrinterTest {
         when(pricer.getPrice("apple")).thenReturn(100);
 
         String receipt = getReceiptPrintResult(receiptFormatter, shoppingCart);
-        assertTrue(receipt.contains(String.format(OUTPUT_FORMAT, "apple", 2, 2.0f)));
+        assertTrue(receipt.contains(String.format(OUTPUT_FORMAT, 2.0f, "apple", 2)));
         assertTrue(receipt.contains(String.format(TOTAL_FORMAT, 2.0f)));
     }
 
@@ -61,10 +59,9 @@ public class SimpleShoppingCartReceiptPrinterTest extends ReceiptPrinterTest {
         when(pricer.getPrice("banana")).thenReturn(50);
 
         String receipt = getReceiptPrintResult(receiptFormatter, shoppingCart);
-        assertTrue(receipt.contains(String.format(OUTPUT_FORMAT, "apple", 2, 2.0f)));
-        assertTrue(receipt.contains(String.format(OUTPUT_FORMAT, "banana", 1, 0.5f)));
+        assertTrue(receipt.contains(String.format(OUTPUT_FORMAT, 2.0f, "apple", 2)));
+        assertTrue(receipt.contains(String.format(OUTPUT_FORMAT, 0.5f, "banana", 1)));
         assertTrue(receipt.contains(String.format(TOTAL_FORMAT, 2.5f)));
-
     }
 
     @Test
@@ -78,6 +75,7 @@ public class SimpleShoppingCartReceiptPrinterTest extends ReceiptPrinterTest {
         when(pricer.getPrice("banana")).thenReturn(50);
 
         assertTrue(getReceiptPrintResult(receiptFormatter, shoppingCart)
-                .startsWith(String.format(OUTPUT_FORMAT, "apple", 5, 5.0f)));
+                .startsWith(String.format(OUTPUT_FORMAT, 5.0f, "apple", 5)));
     }
+
 }

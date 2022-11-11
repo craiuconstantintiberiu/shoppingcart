@@ -4,11 +4,10 @@ import com.xgen.interview.ShoppingCart;
 
 import java.util.Map;
 
-public class SimpleShoppingCartReceiptPrinter implements IShoppingCartReceiptPrinter {
+public class PriceFirstShoppingCartReceiptPrinter implements IShoppingCartReceiptPrinter{
 
+    public static final String OUTPUT_FORMAT = "€%.2f - %s - %d%n";
     public static final String TOTAL_FORMAT = "Total - €%.2f%n";
-    public static final String OUTPUT_FORMAT = "%s - %d - €%.2f%n";
-
     @Override
     public void printReceipt(ShoppingCart shoppingCart) {
         int totalInCents = 0;
@@ -16,12 +15,10 @@ public class SimpleShoppingCartReceiptPrinter implements IShoppingCartReceiptPri
             String itemType = itemAndQuantity.getKey();
             int quantity = itemAndQuantity.getValue();
             int priceInCents = shoppingCart.getPricingDatabase().getPrice(itemType) * quantity;
-
-            totalInCents += priceInCents;
+            totalInCents+=priceInCents;
             float priceInEuros = convertFromCentsToEuros(priceInCents);
-
-            System.out.printf(OUTPUT_FORMAT, itemAndQuantity.getKey(),
-                    itemAndQuantity.getValue(), priceInEuros);
+            System.out.printf(OUTPUT_FORMAT, priceInEuros, itemAndQuantity.getKey(),
+                    itemAndQuantity.getValue());
         }
 
         System.out.printf(TOTAL_FORMAT, convertFromCentsToEuros(totalInCents));
