@@ -9,7 +9,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -84,6 +87,23 @@ public class ShoppingCartTest {
         assertTrue(items.contains(new ShoppingItem("apple", 100, 4)));
         assertTrue(items.contains(new ShoppingItem("banana", 50, 3)));
     }
+
+
+    @Test
+    public void whenPrintingReceiptOfShoppingCartThenReceiptIsPrintedAsReceivedFromReceiptPrinter() {
+        List<String> generatedReceipt = List.of("apple - 1 - 2", "Total - 2");
+        when(receiptPrinter.generateReceipt(any(List.class)))
+                .thenReturn(generatedReceipt);
+
+        final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(myOut));
+        shoppingCart.printReceipt();
+
+        String expectedPrint = generatedReceipt.stream()
+                .map(receiptLine->String.format("%s%n", receiptLine))
+                .collect(Collectors.joining());
+        assertEquals(expectedPrint, myOut.toString());
+           }
 
     @Test
     public void whenPrintingReceiptreceiptPrinterIsCalled() {
