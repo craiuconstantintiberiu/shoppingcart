@@ -58,6 +58,15 @@ public class ShoppingCartTest {
     }
 
     @Test
+    public void whenAddingItemRepeatedlyThenQuantityCorrectlyUpdated() {
+        shoppingCart.addItem("apple", 2);
+        shoppingCart.addItem("apple", 2);
+
+        assertTrue(shoppingCart.getContents().containsKey("apple"));
+        assertEquals(4, (int) shoppingCart.getContents().get("apple"));
+    }
+
+    @Test
     public void whenPrintingReceiptReceiptFormatterIsCalled() {
         shoppingCart.printReceipt();
         verify(receiptFormatter).printReceipt(shoppingCart);

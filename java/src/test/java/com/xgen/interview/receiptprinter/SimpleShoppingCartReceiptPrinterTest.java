@@ -1,5 +1,6 @@
-package com.xgen.interview;
+package com.xgen.interview.receiptprinter;
 
+import com.xgen.interview.ShoppingCart;
 import com.xgen.interview.pricingdatabase.PricingDatabaseInMemory;
 import com.xgen.interview.receiptprinter.IShoppingCartReceiptPrinter;
 import com.xgen.interview.receiptprinter.SimpleShoppingCartReceiptPrinter;
@@ -58,6 +59,19 @@ public class SimpleShoppingCartReceiptPrinterTest {
         assertTrue(getReceiptPrintResult().contains(String.format("apple - 2 - €2.00%n")));
         assertTrue(getReceiptPrintResult().contains(String.format("banana - 1 - €0.50%n")));
         assertTrue(getReceiptPrintResult().contains(String.format("Total - €2.50%n")));
+    }
+
+    @Test
+    public void whenPrintingReceiptThenReceiptPrintedInOrder() {
+        shoppingCart.addItem("apple", 2);
+        shoppingCart.addItem("banana", 1);
+        shoppingCart.addItem("banana", 1);
+        shoppingCart.addItem("apple", 3);
+
+        when(pricer.getPrice("apple")).thenReturn(100);
+        when(pricer.getPrice("banana")).thenReturn(50);
+
+        assertTrue(getReceiptPrintResult().startsWith(String.format("apple - 5 - €5.00%n")));
     }
 
     private String getReceiptPrintResult() {

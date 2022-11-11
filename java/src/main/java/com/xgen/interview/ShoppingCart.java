@@ -5,12 +5,13 @@ import com.xgen.interview.pricingdatabase.PricingDatabaseInMemory;
 import com.xgen.interview.receiptprinter.IShoppingCartReceiptPrinter;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 
 public class ShoppingCart implements IShoppingCart {
 
-    private final HashMap<String, Integer> contents = new HashMap<>();
+    private final HashMap<String, Integer> contents = new LinkedHashMap<>();
     private final IPricingDatabase pricingDatabase;
     private final IShoppingCartReceiptPrinter receiptFormatter;
 
