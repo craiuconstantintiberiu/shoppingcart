@@ -25,14 +25,14 @@ public class ShoppingCartTest {
     private IPricingDatabase pricingDatabase;
 
     @Mock
-    private IShoppingCartReceiptPrinter receiptFormatter;
+    private IShoppingCartReceiptPrinter receiptPrinter;
 
 
     private ShoppingCart shoppingCart;
 
     @Before
     public void setup() {
-        shoppingCart = new ShoppingCart(pricingDatabase, receiptFormatter);
+        shoppingCart = new ShoppingCart(pricingDatabase, receiptPrinter);
     }
 
     @Test
@@ -86,9 +86,9 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void whenPrintingReceiptReceiptFormatterIsCalled() {
+    public void whenPrintingReceiptreceiptPrinterIsCalled() {
         shoppingCart.printReceipt();
-        verify(receiptFormatter).generateReceipt(any(List.class));
+        verify(receiptPrinter).generateReceipt(any(List.class));
     }
 }
 

@@ -19,13 +19,13 @@ public class ShoppingCart implements IShoppingCart {
 
     private final Map<String, Integer> contents = new LinkedHashMap<>();
     private final IPricingDatabase pricingDatabase;
-    private final IShoppingCartReceiptPrinter receiptFormatter;
+    private final IShoppingCartReceiptPrinter receiptPrinter;
 
 
-    public ShoppingCart(IPricingDatabase pricer,
-                        IShoppingCartReceiptPrinter receiptFormatter) {
-        this.pricingDatabase = pricer;
-        this.receiptFormatter = receiptFormatter;
+    public ShoppingCart(IPricingDatabase pricingDatabase,
+                        IShoppingCartReceiptPrinter receiptPrinter) {
+        this.pricingDatabase = pricingDatabase;
+        this.receiptPrinter = receiptPrinter;
     }
 
     public void addItem(String itemType, int quantity) {
@@ -38,7 +38,7 @@ public class ShoppingCart implements IShoppingCart {
      * constructor.
      */
     public void printReceipt() {
-        receiptFormatter.generateReceipt(getShoppingItems()).forEach(System.out::println);
+        receiptPrinter.generateReceipt(getShoppingItems()).forEach(System.out::println);
     }
 
     public List<ShoppingItem> getShoppingItems() {

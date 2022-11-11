@@ -19,23 +19,23 @@ import static org.mockito.Mockito.when;
 public class SimpleShoppingCartReceiptPrinterTest {
 
     @Mock
-    private PricingDatabaseInMemory pricer;
+    private PricingDatabaseInMemory pricingDatabase;
 
     private ShoppingCart shoppingCart;
 
-    private final IShoppingCartReceiptPrinter receiptFormatter = new SimpleShoppingCartReceiptPrinter();
+    private final IShoppingCartReceiptPrinter receiptPrinter = new SimpleShoppingCartReceiptPrinter();
 
     @Before
     public void setup() {
-        shoppingCart = new ShoppingCart(pricer, receiptFormatter);
+        shoppingCart = new ShoppingCart(pricingDatabase, receiptPrinter);
     }
 
     @Test
     public void whenPrintingReceiptForCartWithOneItemReceiptIsCorrectlyPrinted() {
         shoppingCart.addItem("apple", 1);
-        when(pricer.getPrice("apple")).thenReturn(100);
+        when(pricingDatabase.getPrice("apple")).thenReturn(100);
 
-        List<String> receipt = receiptFormatter.generateReceipt(shoppingCart.getShoppingItems());
+        List<String> receipt = receiptPrinter.generateReceipt(shoppingCart.getShoppingItems());
         assertTrue(receipt.contains(String.format(OUTPUT_FORMAT, "apple", 1, 1.0f)));
         assertTrue(receipt.contains(String.format(TOTAL_FORMAT, 1.0f)));
     }
@@ -43,9 +43,9 @@ public class SimpleShoppingCartReceiptPrinterTest {
     @Test
     public void whenPrintingReceiptForCartWithOneItemMultipleQuantitiesReceiptIsCorrectlyPrinted() {
         shoppingCart.addItem("apple", 2);
-        when(pricer.getPrice("apple")).thenReturn(100);
+        when(pricingDatabase.getPrice("apple")).thenReturn(100);
 
-        List<String> receipt = receiptFormatter.generateReceipt(shoppingCart.getShoppingItems());
+        List<String> receipt = receiptPrinter.generateReceipt(shoppingCart.getShoppingItems());
         assertTrue(receipt.contains(String.format(OUTPUT_FORMAT, "apple", 2, 2.0f)));
         assertTrue(receipt.contains(String.format(TOTAL_FORMAT, 2.0f)));
     }
@@ -54,10 +54,10 @@ public class SimpleShoppingCartReceiptPrinterTest {
     public void whenPrintingReceiptForCartWithMultipleItemsThenReceiptIsCorrectlyPrinted() {
         shoppingCart.addItem("apple", 2);
         shoppingCart.addItem("banana", 1);
-        when(pricer.getPrice("apple")).thenReturn(100);
-        when(pricer.getPrice("banana")).thenReturn(50);
+        when(pricingDatabase.getPrice("apple")).thenReturn(100);
+        when(pricingDatabase.getPrice("banana")).thenReturn(50);
 
-        List<String> receipt = receiptFormatter.generateReceipt(shoppingCart.getShoppingItems());
+        List<String> receipt = receiptPrinter.generateReceipt(shoppingCart.getShoppingItems());
         assertTrue(receipt.contains(String.format(OUTPUT_FORMAT, "apple", 2, 2.0f)));
         assertTrue(receipt.contains(String.format(OUTPUT_FORMAT, "banana", 1, 0.5f)));
         assertTrue(receipt.contains(String.format(TOTAL_FORMAT, 2.5f)));
@@ -71,10 +71,10 @@ public class SimpleShoppingCartReceiptPrinterTest {
         shoppingCart.addItem("banana", 1);
         shoppingCart.addItem("apple", 3);
 
-        when(pricer.getPrice("apple")).thenReturn(100);
-        when(pricer.getPrice("banana")).thenReturn(50);
+        when(pricingDatabase.getPrice("apple")).thenReturn(100);
+        when(pricingDatabase.getPrice("banana")).thenReturn(50);
 
-        assertTrue(receiptFormatter.generateReceipt(shoppingCart.getShoppingItems())
+        assertTrue(receiptPrinter.generateReceipt(shoppingCart.getShoppingItems())
                 .get(0).contains(String.format(OUTPUT_FORMAT, "apple", 5, 5.0f)));
     }
 }
