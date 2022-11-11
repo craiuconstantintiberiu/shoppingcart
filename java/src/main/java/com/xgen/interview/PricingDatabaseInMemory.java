@@ -1,21 +1,17 @@
 package com.xgen.interview;
 
-import java.util.HashMap;
+import java.util.Map;
 
 
-/**
- * A stub implementation - for this exercise, you may disregard that this is incomplete.
- */
 public class PricingDatabaseInMemory implements IPricingDatabase {
-    HashMap<String, Integer> pricingDatabase = new HashMap<>(); // stub
+    private final Map<String, Integer> itemsAndPrices;
 
-    public PricingDatabaseInMemory() {
-        pricingDatabase.put("apple", 100);
-        pricingDatabase.put("banana", 200);
+    public PricingDatabaseInMemory(Map<String, Integer> itemsAndPrices) {
+        this.itemsAndPrices = itemsAndPrices;
     }
 
     public Integer getPrice(String itemType) {
-        return pricingDatabase.getOrDefault(itemType, 0);
+        return itemsAndPrices.getOrDefault(itemType, 0);
     }
 
 }
